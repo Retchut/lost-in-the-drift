@@ -5,7 +5,11 @@ using UnityEngine;
 public class SectionTrigger : MonoBehaviour
 {
     public GameObject[] roadSections; // Array of prefabs to choose from
-    private float sectionSpacing = 40f; // Spacing of terrain
+    [SerializeField]
+    private float roadLength = 100f; // Length (height) of the road tiles
+    [SerializeField]
+    private int lookahead = 2; // how many tiles in front to instantiate (2 by default because we set up the scene with 2 road tiles)
+
 
     private void OnTriggerEnter(Collider other)
     {
@@ -14,8 +18,9 @@ public class SectionTrigger : MonoBehaviour
             // Check if there are road sections to choose from
             if (roadSections.Length > 0)
             {
+                Transform roadTransform = other.transform.parent.transform;
                 // Calculate the new z position based on the number of instantiated sections
-                float newZ = other.transform.parent.gameObject.transform.position.z + sectionSpacing * 2;
+                float newZ = roadTransform.position.z + roadLength * lookahead;
 
                 // Randomly select a prefab from the array
                 int randomIndex = Random.Range(0, roadSections.Length);
