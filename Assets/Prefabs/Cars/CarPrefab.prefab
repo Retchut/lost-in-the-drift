@@ -524,6 +524,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 964abc0e43dbb2944a9fa40aa2f81d0f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxAcceleration: 80000
+  brakeAcceleration: 100000
   _centerOfMass: {x: 0, y: 0, z: 0}
   wheelList:
   - wheelModel: {fileID: 7448650142993636885}
@@ -538,6 +540,7 @@ MonoBehaviour:
   - wheelModel: {fileID: 4270374039069589858}
     wheelCollider: {fileID: 114134809973371903}
     axel: 0
+  renderTextureMaterial: {fileID: 0}
 --- !u!114 &2008305802199291067
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -551,9 +554,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   roadSections:
-  - {fileID: 8691571875674286987, guid: c263f0507f35bed489c826bf46821b58, type: 3}
-  - {fileID: 8691571875674286987, guid: 025fdd2973a375a4a9bfda1a13b764ae, type: 3}
-  - {fileID: 8691571875674286987, guid: 13ede1c09c8f844469f6e9bd5e23075d, type: 3}
   - {fileID: 8691571875674286987, guid: 5f3853e316024cb45b271ce1f854234a, type: 3}
 --- !u!1 &5131830131717925032
 GameObject:

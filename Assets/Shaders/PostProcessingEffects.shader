@@ -235,7 +235,7 @@ Shader "PostProcessing/PostProcessingEffects"
 
                 // mask
                 float centerMaskSize = 0.06;
-                float centerMaskEdge = clamp(1.0 - _CarSpeed/5.0, 0.5, 1.0);
+                float centerMaskEdge = clamp(1.0-4.0/10000 * _CarSpeed*_CarSpeed, 0.5, 1.0); // around 35 velocity hits the max (0.5)
                 float distanceToCenter = distance(center, i.uv);
                 float cleanMask = inverseLerp(centerMaskSize, centerMaskSize + centerMaskEdge, distanceToCenter);
 
