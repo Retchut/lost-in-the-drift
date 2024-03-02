@@ -73,7 +73,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Texture:
-        m_Texture: {fileID: 2800000, guid: aac72f5456b64d14b8e9fb1b5857de6a, type: 3}
+        m_Texture: {fileID: 2800000, guid: 1f9ca2de751390c45b67665ba2de6245, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Ints: []
@@ -96,7 +96,7 @@ Material:
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 1
-    - _Tile_strength: 4
+    - _Tile_strength: 1
     - _UVSec: 0
     - _ZWrite: 1
     m_Colors:
