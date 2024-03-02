@@ -6,13 +6,6 @@ public class SectionTrigger : MonoBehaviour
 {
     public GameObject[] roadSections; // Array of prefabs to choose from
     private float sectionSpacing = 40f; // Spacing of terrain
-    private float originalZ = 0f;
-
-    void Start()
-    {
-        // buscar transforme da primeira tile
-        originalZ = GameObject.Find("First_Road_Section").transform.position.z - (sectionSpacing / 2);
-    }
 
     private void OnTriggerEnter(Collider other)
     {
