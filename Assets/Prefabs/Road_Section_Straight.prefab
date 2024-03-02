@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 7565497478327223014}
   - component: {fileID: 5304683992426964501}
   m_Layer: 6
-  m_Name: Plane-Straigth (1)
+  m_Name: Plane-Straight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -142,7 +142,7 @@ GameObject:
   - component: {fileID: 5743289877132493496}
   - component: {fileID: 8677376221085991428}
   m_Layer: 6
-  m_Name: Plane-Straigth (3)
+  m_Name: Plane-Straight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -376,7 +376,7 @@ GameObject:
   - component: {fileID: 6736145569895456511}
   - component: {fileID: 3866204550198665001}
   m_Layer: 6
-  m_Name: Plane-Straigth (2)
+  m_Name: Plane-Straight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -504,7 +504,7 @@ GameObject:
   - component: {fileID: 2892398894122281925}
   - component: {fileID: 6076941362751962556}
   m_Layer: 6
-  m_Name: Plane-Straigth (4)
+  m_Name: Plane-Straight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -630,7 +630,7 @@ GameObject:
   - component: {fileID: 4816427864624552621}
   - component: {fileID: 4889482524652101243}
   m_Layer: 6
-  m_Name: Road_Section_Straigth
+  m_Name: Road_Section_Straight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

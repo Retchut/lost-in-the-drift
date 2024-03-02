@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 8620012493072600976}
   - component: {fileID: 2671298559631284147}
   m_Layer: 6
-  m_Name: Plane-Straigth
+  m_Name: Plane-Straight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -760,7 +760,7 @@ GameObject:
   - component: {fileID: 1494817522222138492}
   - component: {fileID: 7509330478164121976}
   m_Layer: 6
-  m_Name: Plane-Straigth
+  m_Name: Plane-Straight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
