@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Trigger
   - Destroy
+  - RenderOutput
   layers:
   - Default
   - TransparentFX
