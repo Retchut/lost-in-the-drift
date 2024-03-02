@@ -15,8 +15,8 @@ public class CarController : MonoBehaviour
         public Axel axel;
     }
 
-    private float maxAcceleration = 18000f;
-    private float brakeAcceleration = 30000f;
+    private float maxAcceleration = 22000f;
+    private float brakeAcceleration = 80000f;
 
     private float turnSensitivity = 1.0f;
     private float maxSteerAngle = 30.0f;
