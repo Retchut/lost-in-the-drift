@@ -29,10 +29,12 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
+    - _CarSpeed: 7.7
     - _ColorPrecision: 30
     - _Downsample_Factor: 1
     - _HeightPixelation: 150
     - _Intensity: 1.2
+    - _Speed: 0.1
     - _Upsample_Factor: 1
     - _WidthPixelation: 200
     m_Colors: []
