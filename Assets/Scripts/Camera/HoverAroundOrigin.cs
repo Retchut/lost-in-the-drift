@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CameraTest : MonoBehaviour
+public class HoverAroundOrigin : MonoBehaviour
 {
     public float height = 2.5f;
     public float radius = 3f;
