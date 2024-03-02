@@ -554,6 +554,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   roadSections:
+  - {fileID: 8691571875674286987, guid: c263f0507f35bed489c826bf46821b58, type: 3}
+  - {fileID: 8691571875674286987, guid: 025fdd2973a375a4a9bfda1a13b764ae, type: 3}
+  - {fileID: 8691571875674286987, guid: 13ede1c09c8f844469f6e9bd5e23075d, type: 3}
   - {fileID: 8691571875674286987, guid: 5f3853e316024cb45b271ce1f854234a, type: 3}
 --- !u!1 &5131830131717925032
 GameObject:

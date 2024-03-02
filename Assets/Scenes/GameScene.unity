@@ -486,7 +486,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2008305802199291067, guid: e595b6b13c249df4e8d0cbc82545529f, type: 3}
       propertyPath: roadSections.Array.size
-      value: 4
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2008305802199291067, guid: e595b6b13c249df4e8d0cbc82545529f, type: 3}
       propertyPath: roadSections.Array.data[0]
