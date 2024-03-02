@@ -212,8 +212,11 @@ Shader "PostProcessing/PostProcessingEffects"
 
             float4 frag (v2f i) : SV_Target
             {
-                // TODO: if speed = 0, return unmodified texture sample
                 // If speed = 0, due to the random nature of the noise generator, we might get some small random lines when the car is meant to be stopped
+                if(_CarSpeed <= 0){
+                    return tex2D(_PixelizedTexture, i.uv);
+                }
+
                 float2 rotationSpeed = 1.0f;
 
                 // noise pattern
