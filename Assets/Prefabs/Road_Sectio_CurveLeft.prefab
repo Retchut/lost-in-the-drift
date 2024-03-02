@@ -29,7 +29,7 @@ Transform:
   m_GameObject: {fileID: 538224192008340932}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 4, y: -2, z: -5}
+  m_LocalPosition: {x: -16, y: -2, z: -5}
   m_LocalScale: {x: 1, y: 4, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -142,7 +142,7 @@ GameObject:
   - component: {fileID: 7565497478327223014}
   - component: {fileID: 5304683992426964501}
   m_Layer: 6
-  m_Name: Plane-Curve-RtT
+  m_Name: Plane-Curve-LtT
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -156,13 +156,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1208741528212306596}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: 0.7071068, z: -0, w: 0.7071068}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -6, y: -2, z: 15}
   m_LocalScale: {x: 1, y: 4, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3694918957464134428}
-  m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &3503094792975203530
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -376,7 +376,7 @@ GameObject:
   - component: {fileID: 6902817926683668734}
   - component: {fileID: 2824661516443096003}
   m_Layer: 6
-  m_Name: Plane-Curve-BtL
+  m_Name: Plane-Curve-BtR
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -390,13 +390,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5037733010947560089}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: -0.7071068, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 4, y: -2, z: 15}
+  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
+  m_LocalPosition: {x: -16, y: -2, z: 15}
   m_LocalScale: {x: 1, y: 4, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3694918957464134428}
-  m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!33 &787370473884224408
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -504,7 +504,7 @@ GameObject:
   - component: {fileID: 7453387678053536011}
   - component: {fileID: 7164558351315211317}
   m_Layer: 6
-  m_Name: Plane-Curve-BtR
+  m_Name: Plane-Curve-BtL
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -518,13 +518,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5116046066446964019}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
+  m_LocalRotation: {x: 0, y: -0.7071068, z: 0, w: 0.7071068}
   m_LocalPosition: {x: -6, y: -2, z: -15}
   m_LocalScale: {x: 1, y: 4, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3694918957464134428}
-  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
 --- !u!33 &2317113958590263653
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -632,7 +632,7 @@ GameObject:
   - component: {fileID: 363782302343815283}
   - component: {fileID: 6541215558571445698}
   m_Layer: 6
-  m_Name: Plane-Curve-LtT
+  m_Name: Plane-Curve-RtT
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -646,13 +646,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5433912632754070412}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 4, y: -2, z: -15}
+  m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: -16, y: -2, z: -15}
   m_LocalScale: {x: 1, y: 4, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3694918957464134428}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
 --- !u!33 &2501174307740004126
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -775,7 +775,7 @@ Transform:
   m_GameObject: {fileID: 5722255105012852262}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 4, y: -2, z: 5}
+  m_LocalPosition: {x: -16, y: -2, z: 5}
   m_LocalScale: {x: 1, y: 4, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -884,9 +884,9 @@ GameObject:
   m_Component:
   - component: {fileID: 3694918957464134428}
   - component: {fileID: 4816427864624552621}
-  - component: {fileID: 8912011752990383545}
+  - component: {fileID: 968865353608837438}
   m_Layer: 6
-  m_Name: Road_Sectio_CurveRight
+  m_Name: Road_Sectio_CurveLeft
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -928,7 +928,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 4
---- !u!54 &8912011752990383545
+--- !u!54 &968865353608837438
 Rigidbody:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
