@@ -10,8 +10,7 @@ public class SectionTrigger : MonoBehaviour
     {
         if(other.gameObject.CompareTag("Trigger")) 
         {
-            Instantiate(roadSection, new Vector3(6,2,25), Quaternion.identity);
+            Instantiate(roadSection, new Vector3(11, 2, transform.position.z + 61), Quaternion.identity);
         }
     }
-
 }
