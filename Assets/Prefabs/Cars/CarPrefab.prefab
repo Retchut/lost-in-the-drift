@@ -460,6 +460,7 @@ GameObject:
   - component: {fileID: 5220783951402325608}
   - component: {fileID: 8408883013619437743}
   - component: {fileID: 3397118886021183546}
+  - component: {fileID: 2008305802199291067}
   m_Layer: 0
   m_Name: CarPrefab
   m_TagString: Untagged
@@ -537,6 +538,23 @@ MonoBehaviour:
   - wheelModel: {fileID: 4270374039069589858}
     wheelCollider: {fileID: 114134809973371903}
     axel: 0
+--- !u!114 &2008305802199291067
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4764754074562234517}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9dfe084f03ccbf542848e02143b51c55, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  roadSections:
+  - {fileID: 8691571875674286987, guid: c263f0507f35bed489c826bf46821b58, type: 3}
+  - {fileID: 8691571875674286987, guid: 025fdd2973a375a4a9bfda1a13b764ae, type: 3}
+  - {fileID: 8691571875674286987, guid: 13ede1c09c8f844469f6e9bd5e23075d, type: 3}
+  - {fileID: 8691571875674286987, guid: 5f3853e316024cb45b271ce1f854234a, type: 3}
 --- !u!1 &5131830131717925032
 GameObject:
   m_ObjectHideFlags: 0
