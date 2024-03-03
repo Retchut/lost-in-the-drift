@@ -16,7 +16,6 @@ public class FlashingText : MonoBehaviour
         if (tmp)
         {
             baseColor = tmp.color;
-            Debug.Log(baseColor.a);
         }
         else
         {
@@ -29,7 +28,6 @@ public class FlashingText : MonoBehaviour
         if (tmp)
         {
             float alpha = 0.5f + Mathf.Sin(Time.time * flickerSpeed) / 2.0f;
-            Debug.Log(alpha);
             Color newColor = baseColor;
             newColor.a = alpha;
             tmp.color = newColor;
