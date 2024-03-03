@@ -36,8 +36,19 @@ public class CarController : MonoBehaviour
     private string verticalAxis = "Vertical";
     private string horizontalAxis = "Horizontal";
 
+    // shader material
     [SerializeField]
     private Material renderTextureMaterial;
+
+    // death conditions
+    private float deathTimerMax = 10.0f;
+    private float deathTimer = 10.0f;
+    private Coroutine deathTimerCoroutine;
+    private bool deathTimerCoroutineRunning = false;
+    private float defaultGammaCorrection = 1.5f;
+    [SerializeField]
+    private Stack<int> touchingRoadTriggers;
+    bool firstTrigger = true; // avoid detecting leaving the road before the triggers load in
 
     private void Start()
     {
@@ -47,13 +58,34 @@ public class CarController : MonoBehaviour
         if (renderOutputObj)
         {
             renderTextureMaterial = renderOutputObj.GetComponent<RawImage>().material;
+            if (renderTextureMaterial)
+                renderTextureMaterial.SetFloat("_Intensity", defaultGammaCorrection); // reset gamma correction
         }
+        touchingRoadTriggers = new Stack<int>();
+        deathTimer = deathTimerMax;
     }
 
     private void Update()
     {
         GetInputs();
         AnimateWheels();
+        // I hate the way we're checking for triggers but it works fine
+        // not touching any roads
+        if (touchingRoadTriggers.Count == 0)
+        {
+            LeaveRoad();
+        }
+        else
+        {
+            ReenterRoad();
+        }
+        // blink screen while in danger
+        if (deathTimerCoroutineRunning && !firstTrigger)
+        {
+            float timeIndangerNormalized = (deathTimerMax - deathTimer) / deathTimerMax;
+            float interpolatedIntensity = Mathf.Lerp(defaultGammaCorrection, defaultGammaCorrection + 5.0f, timeIndangerNormalized);
+            renderTextureMaterial.SetFloat("_Intensity", interpolatedIntensity);
+        }
     }
 
     private void LateUpdate()
@@ -102,5 +134,75 @@ public class CarController : MonoBehaviour
             wheel.wheelCollider.GetWorldPose(out Vector3 _position, out Quaternion _rotation);
             wheel.wheelModel.transform.SetPositionAndRotation(_position, _rotation);
         }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        // The car is back on top of one road again
+        if (other.tag == "RoadPath")
+        {
+            // this is so unbelievably iffy I hate this
+            touchingRoadTriggers.Push(1); // one more trigger in contact
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        // The car left one road
+        if (other.tag == "RoadPath")
+        {
+            // this is so unbelievably iffy I hate this
+            touchingRoadTriggers.Pop(); // one less trigger in contact
+        }
+    }
+
+    private void ReenterRoad()
+    {
+        if (firstTrigger)
+        {
+            firstTrigger = false;
+        }
+        if (deathTimerCoroutineRunning)
+        {
+            deathTimer = deathTimerMax;
+            StopCoroutine(deathTimerCoroutine);
+            deathTimerCoroutineRunning = false;
+            // reset dark screen
+            if (renderTextureMaterial)
+            {
+                // original should be around 1.5
+                renderTextureMaterial.SetFloat("_Intensity", defaultGammaCorrection);
+            }
+        }
+    }
+
+    private void LeaveRoad()
+    {
+        if (!deathTimerCoroutineRunning)
+        {
+            deathTimerCoroutine = StartCoroutine(DeathTimer());
+            deathTimerCoroutineRunning = true;
+        }
+    }
+
+    private IEnumerator DeathTimer()
+    {
+        float step = 0.1f;
+        while (deathTimer > 0f)
+        {
+            deathTimer -= step;
+            // TODO: replace with ui feedback
+            Debug.Log(deathTimer);
+            yield return new WaitForSeconds(step);
+        }
+
+        // Perform actions when the countdown reaches zero (player dies)
+        GameOver();
+    }
+
+    private void GameOver()
+    {
+        // Add your logic for when the player dies here
+        Debug.Log("game over");
     }
 }
