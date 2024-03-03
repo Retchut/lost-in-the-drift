@@ -10,6 +10,7 @@ TagManager:
   - Waypoint
   - WaypointManager
   - WaypointContainer
+  - InstantiatedInInspector
   layers:
   - Default
   - TransparentFX
