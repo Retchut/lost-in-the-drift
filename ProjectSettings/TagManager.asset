@@ -11,8 +11,10 @@ TagManager:
   - WaypointContainer
   - TilesParent
   - RoadPath
-  - DangerCountdown
-  - DangerUI
+  - UIBackOnRoad
+  - UIDanger
+  - UIDangerCountdown
+  - UIGameOver
   layers:
   - Default
   - TransparentFX
