@@ -1,7 +1,9 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class CarController : MonoBehaviour
@@ -36,8 +38,29 @@ public class CarController : MonoBehaviour
     private string verticalAxis = "Vertical";
     private string horizontalAxis = "Horizontal";
 
+    // shader material
     [SerializeField]
     private Material renderTextureMaterial;
+
+    // death conditions
+    private float deathTimerMax = 10.0f;
+    private float deathTimer = 10.0f;
+    private Coroutine deathTimerCoroutine;
+    private bool deathTimerCoroutineRunning = false;
+    private float defaultGammaCorrection = 1.5f;
+    private CanvasGroup dangerUIGroup;
+    private CanvasGroup gameOverUIGroup;
+    private GameObject backOnRoadUI;
+    private TextMeshProUGUI dangerCountdownTMP;
+    private TextMeshProUGUI travelledTMP;
+    [SerializeField]
+    private Stack<int> touchingRoadTriggers;
+    bool firstTrigger = true; // avoid detecting leaving the road before the triggers load in
+    bool gameOver;
+    private float currentZ = 0;
+
+    // Audio
+    private AudioSource source;
 
     private void Start()
     {
@@ -47,6 +70,50 @@ public class CarController : MonoBehaviour
         if (renderOutputObj)
         {
             renderTextureMaterial = renderOutputObj.GetComponent<RawImage>().material;
+            if (renderTextureMaterial)
+                renderTextureMaterial.SetFloat("_Intensity", defaultGammaCorrection); // reset gamma correction
+        }
+        touchingRoadTriggers = new Stack<int>();
+        deathTimer = deathTimerMax;
+        gameOver = false;
+        backOnRoadUI = GameObject.FindGameObjectWithTag("UIBackOnRoad");
+        if (!backOnRoadUI)
+        {
+            Debug.LogError("Couldn't get back on road text game object");
+        }
+        dangerCountdownTMP = GameObject.FindGameObjectWithTag("UIDangerCountdown").GetComponent<TextMeshProUGUI>();
+        if (!dangerCountdownTMP)
+        {
+            Debug.LogError("Couldn't get danger countdown text component");
+        }
+        travelledTMP = GameObject.FindGameObjectWithTag("UITravelled").GetComponent<TextMeshProUGUI>();
+        if (!travelledTMP)
+        {
+            Debug.LogError("Couldn't get travelled text component");
+        }
+        dangerUIGroup = GameObject.FindGameObjectWithTag("UIDanger").GetComponent<CanvasGroup>();
+        if (!dangerUIGroup)
+        {
+            Debug.LogError("Couldn't get danger UI canvas groups");
+        }
+        else
+        {
+            dangerUIGroup.alpha = 0f;
+        }
+        gameOverUIGroup = GameObject.FindGameObjectWithTag("UIGameOver").GetComponent<CanvasGroup>();
+        if (!gameOverUIGroup)
+        {
+            Debug.LogError("Couldn't get danger UI canvas groups");
+        }
+        else
+        {
+            gameOverUIGroup.alpha = 0f;
+        }
+        currentZ = 0;
+        source = GetComponent<AudioSource>();
+        if (!source)
+        {
+            Debug.LogError("Unable to load audio source");
         }
     }
 
@@ -54,19 +121,61 @@ public class CarController : MonoBehaviour
     {
         GetInputs();
         AnimateWheels();
+        // only need to check the triggers if the game is running
+        if (!gameOver)
+        {
+            // I hate the way we're checking for triggers but it works fine
+            // not touching any roads
+            if (touchingRoadTriggers.Count == 0)
+            {
+                LeaveRoad();
+            }
+            else
+            {
+                ReenterRoad();
+            }
+        }
+        // blink screen while in danger
+        if (deathTimerCoroutineRunning && !firstTrigger)
+        {
+            float timeIndangerNormalized = (deathTimerMax - deathTimer) / deathTimerMax;
+            float interpolatedIntensity = Mathf.Lerp(defaultGammaCorrection, defaultGammaCorrection + 5.0f, timeIndangerNormalized);
+            renderTextureMaterial.SetFloat("_Intensity", interpolatedIntensity);
+        }
     }
 
     private void LateUpdate()
     {
         Move();
         if (renderTextureMaterial)
+        {
             renderTextureMaterial.SetFloat("_CarSpeed", carRigidBody.velocity.magnitude);
+        }
+        if (transform.position.z >= currentZ)
+        {
+            currentZ = transform.position.z;
+        }
+        travelledTMP.text = "You have travelled " + Mathf.Round(currentZ) + "m";
+
+
     }
 
     private void GetInputs()
     {
-        moveInput = Input.GetAxis(verticalAxis);
-        steerInput = Input.GetAxis(horizontalAxis);
+        if (!gameOver)
+        {
+            moveInput = Input.GetAxis(verticalAxis);
+            steerInput = Input.GetAxis(horizontalAxis);
+        }
+        else
+        {
+            moveInput = 0f;
+            steerInput = 0f;
+            if (Input.GetKeyDown(KeyCode.Return))
+            {
+                SceneManager.LoadScene(0);
+            }
+        }
     }
 
     // TODO: remove magic numbers
@@ -84,7 +193,7 @@ public class CarController : MonoBehaviour
             }
 
             // Brake
-            if (Input.GetKey(KeyCode.Space))
+            if (!gameOver && Input.GetKey(KeyCode.Space))
             {
                 wheel.wheelCollider.brakeTorque = brakeAcceleration * Time.deltaTime;
             }
@@ -102,5 +211,96 @@ public class CarController : MonoBehaviour
             wheel.wheelCollider.GetWorldPose(out Vector3 _position, out Quaternion _rotation);
             wheel.wheelModel.transform.SetPositionAndRotation(_position, _rotation);
         }
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        source.Play();
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        // The car is back on top of one road again
+        if (other.tag == "RoadPath")
+        {
+            // this is so unbelievably iffy I hate this
+            touchingRoadTriggers.Push(1); // one more trigger in contact
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        // The car left one road
+        if (other.tag == "RoadPath")
+        {
+            // this is so unbelievably iffy I hate this
+            touchingRoadTriggers.Pop(); // one less trigger in contact
+        }
+    }
+
+    private void ReenterRoad()
+    {
+        if (firstTrigger)
+        {
+            firstTrigger = false;
+        }
+        if (deathTimerCoroutineRunning)
+        {
+            ToggleDangerUI();
+            deathTimer = deathTimerMax;
+            StopCoroutine(deathTimerCoroutine);
+            deathTimerCoroutineRunning = false;
+            // reset dark screen
+            if (renderTextureMaterial)
+            {
+                // original should be around 1.5
+                renderTextureMaterial.SetFloat("_Intensity", defaultGammaCorrection);
+            }
+        }
+    }
+
+    private void LeaveRoad()
+    {
+        if (!deathTimerCoroutineRunning)
+        {
+            if (!firstTrigger)
+            {
+                ToggleDangerUI();
+                deathTimerCoroutine = StartCoroutine(DeathTimer());
+                deathTimerCoroutineRunning = true;
+            }
+        }
+    }
+
+    private IEnumerator DeathTimer()
+    {
+        float step = 0.1f;
+        while (deathTimer > 0f)
+        {
+            deathTimer -= step;
+            dangerCountdownTMP.text = Mathf.Round(deathTimer) + "." + deathTimer.ToString("#.0");
+
+            yield return new WaitForSeconds(step);
+        }
+
+        // Perform actions when the countdown reaches zero (player dies)
+        GameOver();
+    }
+
+    private void ToggleDangerUI()
+    {
+        if (dangerUIGroup.alpha == 0f)
+            dangerUIGroup.alpha = 1f;
+        else
+            dangerUIGroup.alpha = 0f;
+    }
+
+    private void GameOver()
+    {
+        // just modify the existing text because I'm lazy, it is already flickering as intended, and it would disappear here
+        gameOver = true;
+        gameOverUIGroup.alpha = 1f;
+        dangerUIGroup.alpha = 0f;
+        // TODO: return to menu on enter press in
     }
 }

@@ -7,9 +7,9 @@ public class NPCarSpawner : MonoBehaviour
     Transform player;
 
     [SerializeField]
-    public float timer = 3.0f;
+    public float timer = 1.0f;
     [SerializeField]
-    public float spawnChance = 0.5f;
+    public float spawnChance = 0.7f;
 
     [SerializeField]
     GameObject[] npcarVariants;
