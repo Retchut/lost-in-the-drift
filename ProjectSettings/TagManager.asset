@@ -11,6 +11,8 @@ TagManager:
   - WaypointContainer
   - TilesParent
   - RoadPath
+  - DangerCountdown
+  - DangerUI
   layers:
   - Default
   - TransparentFX

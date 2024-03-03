@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -46,6 +47,8 @@ public class CarController : MonoBehaviour
     private Coroutine deathTimerCoroutine;
     private bool deathTimerCoroutineRunning = false;
     private float defaultGammaCorrection = 1.5f;
+    private CanvasGroup dangerUIGroup;
+    private TextMeshProUGUI dangerCountdownTMP;
     [SerializeField]
     private Stack<int> touchingRoadTriggers;
     bool firstTrigger = true; // avoid detecting leaving the road before the triggers load in
@@ -63,6 +66,21 @@ public class CarController : MonoBehaviour
         }
         touchingRoadTriggers = new Stack<int>();
         deathTimer = deathTimerMax;
+        dangerCountdownTMP = GameObject.FindGameObjectWithTag("DangerCountdown").GetComponent<TextMeshProUGUI>();
+        if (!dangerCountdownTMP)
+        {
+            Debug.LogError("Couldn't get danger countdown text component");
+        }
+        dangerUIGroup = GameObject.FindGameObjectWithTag("DangerUI").GetComponent<CanvasGroup>();
+        if (!dangerUIGroup)
+        {
+            Debug.LogError("Couldn't get danger UI canvas groups");
+        }
+        else
+        {
+            dangerUIGroup.alpha = 0f;
+        }
+
     }
 
     private void Update()
@@ -164,6 +182,7 @@ public class CarController : MonoBehaviour
         }
         if (deathTimerCoroutineRunning)
         {
+            ToggleDangerUI();
             deathTimer = deathTimerMax;
             StopCoroutine(deathTimerCoroutine);
             deathTimerCoroutineRunning = false;
@@ -180,8 +199,12 @@ public class CarController : MonoBehaviour
     {
         if (!deathTimerCoroutineRunning)
         {
-            deathTimerCoroutine = StartCoroutine(DeathTimer());
-            deathTimerCoroutineRunning = true;
+            if (!firstTrigger)
+            {
+                ToggleDangerUI();
+                deathTimerCoroutine = StartCoroutine(DeathTimer());
+                deathTimerCoroutineRunning = true;
+            }
         }
     }
 
@@ -191,13 +214,20 @@ public class CarController : MonoBehaviour
         while (deathTimer > 0f)
         {
             deathTimer -= step;
-            // TODO: replace with ui feedback
-            Debug.Log(deathTimer);
+            dangerCountdownTMP.text = Math.Round(deathTimer, 2) + "";
             yield return new WaitForSeconds(step);
         }
 
         // Perform actions when the countdown reaches zero (player dies)
         GameOver();
+    }
+
+    private void ToggleDangerUI()
+    {
+        if (dangerUIGroup.alpha == 0f)
+            dangerUIGroup.alpha = 1f;
+        else
+            dangerUIGroup.alpha = 0f;
     }
 
     private void GameOver()
