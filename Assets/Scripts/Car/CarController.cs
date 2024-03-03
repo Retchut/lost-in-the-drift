@@ -59,6 +59,9 @@ public class CarController : MonoBehaviour
     bool gameOver;
     private float currentZ = 0;
 
+    // Audio
+    private AudioSource source;
+
     private void Start()
     {
         carRigidBody = GetComponent<Rigidbody>();
@@ -107,6 +110,11 @@ public class CarController : MonoBehaviour
             gameOverUIGroup.alpha = 0f;
         }
         currentZ = 0;
+        source = GetComponent<AudioSource>();
+        if (!source)
+        {
+            Debug.LogError("Unable to load audio source");
+        }
     }
 
     private void Update()
@@ -203,6 +211,11 @@ public class CarController : MonoBehaviour
             wheel.wheelCollider.GetWorldPose(out Vector3 _position, out Quaternion _rotation);
             wheel.wheelModel.transform.SetPositionAndRotation(_position, _rotation);
         }
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        source.Play();
     }
 
     private void OnTriggerEnter(Collider other)
