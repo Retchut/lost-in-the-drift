@@ -554,7 +554,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   roadSections:
-  - {fileID: 8691571875674286987, guid: 5f3853e316024cb45b271ce1f854234a, type: 3}
+  - {fileID: 3935568184243925202, guid: 89249ac7145f1bafcaef22ead0b7d28c, type: 3}
   - {fileID: 3935568184243925202, guid: 8c65e77150ad6324a97a22aec758332b, type: 3}
   - {fileID: 3935568184243925202, guid: ed3be7e0226bf6a61a3158e7ad0cbb39, type: 3}
   - {fileID: 3935568184243925202, guid: 478867ee33c60b2e0ab27c0c2817f874, type: 3}
