@@ -49,6 +49,11 @@ public class NPCarController : MonoBehaviour
                     // but I am way too tired to make it work, and this works so let's keep it that way :)
                     for (int j = container.transform.childCount - 1; j >= 0; j--)
                     {
+                        // ignore waypoints behind where the car was instantiated
+                        if (container.transform.GetChild(j).transform.position.z > transform.position.z)
+                        {
+                            continue;
+                        }
                         // can't peek an empty queue duh
                         if (waypoints.Count == 0)
                         {
@@ -68,8 +73,7 @@ public class NPCarController : MonoBehaviour
                 }
             }
         }
-        // skip the last waypoint of the first tile, because the NPCar is instantiated ahead of it
-        waypoints.Dequeue();
+        // PrintQ(); // for debugging purposes
         nextWaypointPos = waypoints.Dequeue().position;
     }
 

@@ -29,7 +29,7 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _CarSpeed: 37.001095
+    - _CarSpeed: 12.259773
     - _ColorPrecision: 40
     - _Downsample_Factor: 0.1
     - _HeightPixelation: 200
