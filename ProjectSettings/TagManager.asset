@@ -15,6 +15,7 @@ TagManager:
   - UIDanger
   - UIDangerCountdown
   - UIGameOver
+  - UITravelled
   layers:
   - Default
   - TransparentFX

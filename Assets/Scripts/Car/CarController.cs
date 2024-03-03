@@ -52,10 +52,12 @@ public class CarController : MonoBehaviour
     private CanvasGroup gameOverUIGroup;
     private GameObject backOnRoadUI;
     private TextMeshProUGUI dangerCountdownTMP;
+    private TextMeshProUGUI travelledTMP;
     [SerializeField]
     private Stack<int> touchingRoadTriggers;
     bool firstTrigger = true; // avoid detecting leaving the road before the triggers load in
     bool gameOver;
+    private float currentZ = 0;
 
     private void Start()
     {
@@ -81,6 +83,11 @@ public class CarController : MonoBehaviour
         {
             Debug.LogError("Couldn't get danger countdown text component");
         }
+        travelledTMP = GameObject.FindGameObjectWithTag("UITravelled").GetComponent<TextMeshProUGUI>();
+        if (!travelledTMP)
+        {
+            Debug.LogError("Couldn't get travelled text component");
+        }
         dangerUIGroup = GameObject.FindGameObjectWithTag("UIDanger").GetComponent<CanvasGroup>();
         if (!dangerUIGroup)
         {
@@ -99,6 +106,7 @@ public class CarController : MonoBehaviour
         {
             gameOverUIGroup.alpha = 0f;
         }
+        currentZ = 0;
     }
 
     private void Update()
@@ -132,7 +140,14 @@ public class CarController : MonoBehaviour
     {
         Move();
         if (renderTextureMaterial)
+        {
             renderTextureMaterial.SetFloat("_CarSpeed", carRigidBody.velocity.magnitude);
+        }
+        if (transform.position.z >= currentZ)
+        {
+            currentZ = transform.position.z;
+        }
+        travelledTMP.text = "You have travelled " + Math.Round(currentZ, 0) + "m";
     }
 
     private void GetInputs()
