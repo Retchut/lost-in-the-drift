@@ -7,6 +7,9 @@ TagManager:
   - Trigger
   - Destroy
   - RenderOutput
+  - Waypoint
+  - WaypointManager
+  - WaypointContainer
   layers:
   - Default
   - TransparentFX
