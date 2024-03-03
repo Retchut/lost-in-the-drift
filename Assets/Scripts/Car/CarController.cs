@@ -147,7 +147,9 @@ public class CarController : MonoBehaviour
         {
             currentZ = transform.position.z;
         }
-        travelledTMP.text = "You have travelled " + Math.Round(currentZ, 0) + "m";
+        travelledTMP.text = "You have travelled " + Mathf.Round(currentZ) + "m";
+
+
     }
 
     private void GetInputs()
@@ -263,7 +265,8 @@ public class CarController : MonoBehaviour
         while (deathTimer > 0f)
         {
             deathTimer -= step;
-            dangerCountdownTMP.text = Math.Round(deathTimer, 2) + "";
+            dangerCountdownTMP.text = Mathf.Round(deathTimer) + "." + deathTimer.ToString("#.0");
+
             yield return new WaitForSeconds(step);
         }
 
