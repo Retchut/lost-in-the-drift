@@ -492,8 +492,9 @@ GameObject:
   m_Component:
   - component: {fileID: 5992790553724103932}
   - component: {fileID: 2079834282992943735}
+  - component: {fileID: 180877773482795568}
   m_Layer: 0
-  m_Name: NPCarG
+  m_Name: Base
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -543,6 +544,18 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &180877773482795568
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4937639141692508676}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 689b4f99f5356a5d1a0d36784ffa6c10, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &5148362452375003959
 GameObject:
   m_ObjectHideFlags: 0
@@ -676,7 +689,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 53bdbe440856f2f84aed8472a80a4bab, type: 2}
+  - {fileID: 2100000, guid: a8481fcecbcb51b46b1bb58bc087fa85, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
