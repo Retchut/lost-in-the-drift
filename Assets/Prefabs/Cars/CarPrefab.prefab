@@ -554,10 +554,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   roadSections:
-  - {fileID: 8691571875674286987, guid: c263f0507f35bed489c826bf46821b58, type: 3}
-  - {fileID: 8691571875674286987, guid: 025fdd2973a375a4a9bfda1a13b764ae, type: 3}
-  - {fileID: 8691571875674286987, guid: 13ede1c09c8f844469f6e9bd5e23075d, type: 3}
   - {fileID: 8691571875674286987, guid: 5f3853e316024cb45b271ce1f854234a, type: 3}
+  - {fileID: 3935568184243925202, guid: 8c65e77150ad6324a97a22aec758332b, type: 3}
+  - {fileID: 3935568184243925202, guid: ed3be7e0226bf6a61a3158e7ad0cbb39, type: 3}
+  - {fileID: 3935568184243925202, guid: 478867ee33c60b2e0ab27c0c2817f874, type: 3}
+  - {fileID: 3935568184243925202, guid: 053003be3b79a7c53a4485fcfbed532d, type: 3}
+  - {fileID: 3935568184243925202, guid: 5eb8dbbe81ec7b46c8fd93c2b935f5bf, type: 3}
+  - {fileID: 3935568184243925202, guid: 5d17142f485b549deb6092ef76ceca91, type: 3}
+  roadLength: 100
+  lookahead: 2
 --- !u!1 &5131830131717925032
 GameObject:
   m_ObjectHideFlags: 0
