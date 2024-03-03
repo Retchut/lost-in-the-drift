@@ -215,7 +215,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5789477765315742080, guid: 5f3853e316024cb45b271ce1f854234a, type: 3}
       propertyPath: m_TagString
-      value: WaypointManager
+      value: WaypointContainer
       objectReference: {fileID: 0}
     - target: {fileID: 8691571875674286987, guid: 5f3853e316024cb45b271ce1f854234a, type: 3}
       propertyPath: m_Name
