@@ -29,11 +29,7 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-<<<<<<< Updated upstream
-    - _CarSpeed: 1.9433595
-=======
-    - _CarSpeed: 22.507315
->>>>>>> Stashed changes
+    - _CarSpeed: 0.507315
     - _ColorPrecision: 35
     - _Downsample_Factor: 8
     - _HeightPixelation: 200
