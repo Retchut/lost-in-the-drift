@@ -278,7 +278,7 @@ public class CarController : MonoBehaviour
         while (deathTimer > 0f)
         {
             deathTimer -= step;
-            dangerCountdownTMP.text = Mathf.Round(deathTimer) + "." + deathTimer.ToString("#.0");
+            dangerCountdownTMP.text = Math.Round(deathTimer, 2) + "";
 
             yield return new WaitForSeconds(step);
         }
