@@ -82,6 +82,11 @@ public class NPCarController : MonoBehaviour
     {
         baseSpeed += acceleration * Time.fixedDeltaTime;
         transform.position += transform.forward * baseSpeed * Time.fixedDeltaTime;
+        // if car has fallen out of the map
+        if (transform.position.y <= -10.0f)
+        {
+            Destroy(gameObject);
+        }
     }
 
     // was pretty useful for debugging

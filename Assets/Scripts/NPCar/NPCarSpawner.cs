@@ -21,15 +21,13 @@ public class NPCarSpawner : MonoBehaviour
         {
             Debug.LogError("Unable to retrieve Player transform");
         }
-        // InvokeRepeating("SpawnCar", 0.0f, timer);
+        InvokeRepeating("SpawnCar", 0.0f, timer);
 
     }
 
-    void Update()
-    // void SpawnCar()
+    void SpawnCar()
     {
-        // if (Random.value < spawnChance && player && npcarVariants.Length > 0)
-        if (Input.GetKeyDown(KeyCode.C) && player && npcarVariants.Length > 0)
+        if (Random.value < spawnChance && player && npcarVariants.Length > 0)
         {
             // Randomly select a prefab from the array
             int randomIndex = Random.Range(0, npcarVariants.Length);
