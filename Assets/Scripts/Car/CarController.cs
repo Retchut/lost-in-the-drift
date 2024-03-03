@@ -48,10 +48,13 @@ public class CarController : MonoBehaviour
     private bool deathTimerCoroutineRunning = false;
     private float defaultGammaCorrection = 1.5f;
     private CanvasGroup dangerUIGroup;
+    private CanvasGroup gameOverUIGroup;
+    private GameObject backOnRoadUI;
     private TextMeshProUGUI dangerCountdownTMP;
     [SerializeField]
     private Stack<int> touchingRoadTriggers;
     bool firstTrigger = true; // avoid detecting leaving the road before the triggers load in
+    bool gameOver;
 
     private void Start()
     {
@@ -66,12 +69,18 @@ public class CarController : MonoBehaviour
         }
         touchingRoadTriggers = new Stack<int>();
         deathTimer = deathTimerMax;
-        dangerCountdownTMP = GameObject.FindGameObjectWithTag("DangerCountdown").GetComponent<TextMeshProUGUI>();
+        gameOver = false;
+        backOnRoadUI = GameObject.FindGameObjectWithTag("UIBackOnRoad");
+        if (!backOnRoadUI)
+        {
+            Debug.LogError("Couldn't get back on road text game object");
+        }
+        dangerCountdownTMP = GameObject.FindGameObjectWithTag("UIDangerCountdown").GetComponent<TextMeshProUGUI>();
         if (!dangerCountdownTMP)
         {
             Debug.LogError("Couldn't get danger countdown text component");
         }
-        dangerUIGroup = GameObject.FindGameObjectWithTag("DangerUI").GetComponent<CanvasGroup>();
+        dangerUIGroup = GameObject.FindGameObjectWithTag("UIDanger").GetComponent<CanvasGroup>();
         if (!dangerUIGroup)
         {
             Debug.LogError("Couldn't get danger UI canvas groups");
@@ -80,22 +89,34 @@ public class CarController : MonoBehaviour
         {
             dangerUIGroup.alpha = 0f;
         }
-
+        gameOverUIGroup = GameObject.FindGameObjectWithTag("UIGameOver").GetComponent<CanvasGroup>();
+        if (!gameOverUIGroup)
+        {
+            Debug.LogError("Couldn't get danger UI canvas groups");
+        }
+        else
+        {
+            gameOverUIGroup.alpha = 0f;
+        }
     }
 
     private void Update()
     {
         GetInputs();
         AnimateWheels();
-        // I hate the way we're checking for triggers but it works fine
-        // not touching any roads
-        if (touchingRoadTriggers.Count == 0)
+        // only need to check the triggers if the game is running
+        if (!gameOver)
         {
-            LeaveRoad();
-        }
-        else
-        {
-            ReenterRoad();
+            // I hate the way we're checking for triggers but it works fine
+            // not touching any roads
+            if (touchingRoadTriggers.Count == 0)
+            {
+                LeaveRoad();
+            }
+            else
+            {
+                ReenterRoad();
+            }
         }
         // blink screen while in danger
         if (deathTimerCoroutineRunning && !firstTrigger)
@@ -115,8 +136,16 @@ public class CarController : MonoBehaviour
 
     private void GetInputs()
     {
-        moveInput = Input.GetAxis(verticalAxis);
-        steerInput = Input.GetAxis(horizontalAxis);
+        if (!gameOver)
+        {
+            moveInput = Input.GetAxis(verticalAxis);
+            steerInput = Input.GetAxis(horizontalAxis);
+        }
+        else
+        {
+            moveInput = 0f;
+            steerInput = 0f;
+        }
     }
 
     // TODO: remove magic numbers
@@ -134,7 +163,7 @@ public class CarController : MonoBehaviour
             }
 
             // Brake
-            if (Input.GetKey(KeyCode.Space))
+            if (!gameOver && Input.GetKey(KeyCode.Space))
             {
                 wheel.wheelCollider.brakeTorque = brakeAcceleration * Time.deltaTime;
             }
@@ -232,7 +261,10 @@ public class CarController : MonoBehaviour
 
     private void GameOver()
     {
-        // Add your logic for when the player dies here
-        Debug.Log("game over");
+        // just modify the existing text because I'm lazy, it is already flickering as intended, and it would disappear here
+        gameOver = true;
+        gameOverUIGroup.alpha = 1f;
+        dangerUIGroup.alpha = 0f;
+        // TODO: return to menu on enter press in
     }
 }
