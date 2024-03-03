@@ -7,6 +7,7 @@ public class RoadController : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Destroy"))
         {
+            Debug.Log(transform.name + "-hit the wall");
             // Destroy the GameObject this script is attached to
             Destroy(gameObject);
         }
