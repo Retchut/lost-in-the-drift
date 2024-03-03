@@ -9,6 +9,7 @@ TagManager:
   - RenderOutput
   - Waypoint
   - WaypointContainer
+  - TilesParent
   layers:
   - Default
   - TransparentFX

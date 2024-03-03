@@ -15,7 +15,6 @@ public class NPCarController : MonoBehaviour
     private Vector3 nextWaypointPos; // checkpoint we are navigating to
 
     private float DEG_TO_RAD = Mathf.PI / 180;
-    private float RAD_TO_DEG = 180 / Mathf.PI;
 
     // Start is called before the first frame update
     void Start()
@@ -24,30 +23,48 @@ public class NPCarController : MonoBehaviour
         waypoints = new Queue<Transform>();
         // initialize waypoints from tiles already present when the NPCar is instantiated
         // iterating through containers, then through their children, to make sure we get the order right
-        //      Note: the FindBlaBlaBla methods iterate from the top of the hierarchy down. So tiles lower down in the inspector were instantiated later!
+        //      Note: Need to go all the way from the Tiles container to the children to make sure we get the order right, as unity's find methods don't guarantee any order.
         // There's also no need to update the checkpoints, as any additional checkpoint that might be created comes with tiles the NPCar can never travel to
-        GameObject[] wpContainers = GameObject.FindGameObjectsWithTag("WaypointContainer");
-        Transform prevWaypoint = null;  // since Peeking a queue gives us the next item to dequeue, not the last enqueued item, we need to store the previously enqueued element
-        foreach (GameObject container in wpContainers)
+        GameObject tilesParent = GameObject.FindGameObjectWithTag("TilesParent");
+        if (!tilesParent)
         {
-            // this should also theoretically work with a stack, and going up in indices instead of down
-            // but I am way too tired to make it work, and this works so let's keep it that way :)
-            for (int i = container.transform.childCount - 1; i >= 0; i--)
-            {
-                // can't peek an empty queue duh
-                if (waypoints.Count == 0)
-                {
-                    waypoints.Enqueue(container.transform.GetChild(i));
-                    prevWaypoint = container.transform.GetChild(i);
-                    continue;
-                }
+            Debug.LogError("Unable to get tiles parent object");
+            return;
+        }
 
-                // waypoints overlap at the start and end of the tiles, so we need to filter them out, and only keep the non-overlapping ones (usually filter the last waypoint of each tile)
-                Transform currWaypoint = container.transform.GetChild(i);
-                if (prevWaypoint.transform.position != currWaypoint.transform.position)
+        Transform prevWaypoint = null;  // since Peeking a queue gives us the next item to dequeue, not the last enqueued item, we need to store the previously enqueued element
+
+        // iterate through all tiles in reverse
+        for (int i = tilesParent.transform.childCount - 1; i >= 0; i--)
+        {
+            Transform tile = tilesParent.transform.GetChild(i);
+            // iterate through all tile components
+            foreach (Transform child in tile)
+            {
+                // find waypoint container
+                if (child.tag == "WaypointContainer")
                 {
-                    waypoints.Enqueue(container.transform.GetChild(i));
-                    prevWaypoint = container.transform.GetChild(i);
+                    Transform container = child;
+                    // this should also theoretically work with a stack, and going up in indices instead of down
+                    // but I am way too tired to make it work, and this works so let's keep it that way :)
+                    for (int j = container.transform.childCount - 1; j >= 0; j--)
+                    {
+                        // can't peek an empty queue duh
+                        if (waypoints.Count == 0)
+                        {
+                            waypoints.Enqueue(container.transform.GetChild(j));
+                            prevWaypoint = container.transform.GetChild(j);
+                            continue;
+                        }
+
+                        // waypoints overlap at the start and end of the tiles, so we need to filter them out, and only keep the non-overlapping ones (usually filter the last waypoint of each tile)
+                        Transform currWaypoint = container.transform.GetChild(j);
+                        if (prevWaypoint.transform.position != currWaypoint.transform.position)
+                        {
+                            waypoints.Enqueue(container.transform.GetChild(j));
+                            prevWaypoint = container.transform.GetChild(j);
+                        }
+                    }
                 }
             }
         }
@@ -61,6 +78,18 @@ public class NPCarController : MonoBehaviour
     {
         baseSpeed += acceleration * Time.fixedDeltaTime;
         transform.position += transform.forward * baseSpeed * Time.fixedDeltaTime;
+    }
+
+    // was pretty useful for debugging
+    void PrintQ()
+    {
+        Queue<Transform> test = waypoints;
+        String queueContents = "";
+        foreach (Transform t in test)
+        {
+            queueContents += t.name + ", ";
+        }
+        Debug.Log(queueContents);
     }
 
     private void OnTriggerEnter(Collider other)
